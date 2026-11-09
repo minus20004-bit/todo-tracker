@@ -1,7 +1,29 @@
 import os
+import json
 
-# список для хранения задач.
-tasks = []
+# Имя файла для хранения данных
+FILENAME = "tasks.txt"
+
+def load_tasks():
+    """Загрузка задач из файла при старте программы"""
+    if not os.path.exists(FILENAME):
+        return []
+    try:
+        with open(FILENAME, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return []
+
+def save_tasks():
+    """Сохранение текущих задач в файл"""
+    try:
+        with open(FILENAME, "w", encoding="utf-8") as f:
+            json.dump(tasks, f, ensure_ascii=False, indent=4)
+    except Exception as e:
+        print(f"Ошибка при сохранении данных: {e}")
+
+# Загружаем задачи из файла в список
+tasks = load_tasks()
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -32,6 +54,7 @@ def add_task():
     title = input("Введите название задачи: ").strip()
     if title:
         tasks.append({"title": title, "completed": False})
+        save_tasks()  # Сохраняем изменения
         print(f"Поставлена задача: \"{title}\" ➕\n")
     else:
         print("Название задачи не может быть пустым!\n")
@@ -44,6 +67,7 @@ def complete_task():
         num = int(input("Введите номер выполненной задачи: "))
         if 1 <= num <= len(tasks):
             tasks[num - 1]["completed"] = True
+            save_tasks()  # Сохраняем изменения
             print("Статус задачи обновлен! Число дел уменьшается. 🚀\n")
         else:
             print("Неверный номер задачи!\n")
@@ -58,6 +82,7 @@ def delete_task():
         num = int(input("Введите номер задачи для удаления: "))
         if 1 <= num <= len(tasks):
             removed = tasks.pop(num - 1)
+            save_tasks()  # Сохраняем изменения
             print(f"Задача \"{removed['title']}\" удалена. 🗑️\n")
         else:
             print("Неверный номер задачи!\n")
