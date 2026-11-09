@@ -41,12 +41,12 @@ def show_menu():
 def list_tasks():
     clear_screen()
     if not tasks:
-        print("Ваш список задач пуст! 🎉\n")
+        print("Ваш список задач пуст!\n")
         return
     
     print("--- ТЕКУЩИЕ ЗАДАЧИ ---")
     for index, task in enumerate(tasks, start=1):
-        status = "[✓]" if task["completed"] else "[ ]"
+        status = "[+]" if task["completed"] else "[ ]"
         print(f"{index}. {status} {task['title']}")
     print("----------------------\n")
 
@@ -56,7 +56,7 @@ def add_task():
     if title:
         tasks.append({"title": title, "completed": False})
         save_tasks()  # Сохраняем изменения
-        print(f"Поставлена задача: \"{title}\" ➕\n")
+        print(f"Поставлена задача: \"{title}\" +\n")
     else:
         print("Название задачи не может быть пустым!\n")
 
@@ -69,7 +69,7 @@ def complete_task():
         if 1 <= num <= len(tasks):
             tasks[num - 1]["completed"] = True
             save_tasks()  # Сохраняем изменения
-            print("Статус задачи обновлен! Число дел уменьшается. 🚀\n")
+            print("Статус задачи обновлен! Число дел уменьшается!\n")
         else:
             print("Неверный номер задачи!\n")
     except ValueError:
@@ -84,7 +84,7 @@ def delete_task():
         if 1 <= num <= len(tasks):
             removed = tasks.pop(num - 1)
             save_tasks()  # Сохраняем изменения
-            print(f"Задача \"{removed['title']}\" удалена. 🗑️\n")
+            print(f"Задача \"{removed['title']}\" удалена.\n")
         else:
             print("Неверный номер задачи!\n")
     except ValueError:
@@ -104,7 +104,7 @@ def main():
         elif choice == "4":
             delete_task()
         elif choice == "5":
-            print("До встречи! Продуктивного дня! 👋")
+            print("До встречи! Продуктивного дня!")
             break
         else:
             clear_screen()
