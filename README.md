@@ -17,4 +17,3 @@
    `git clone https://github.com/minus20004-bit/todo-tracker`
 3. Перейдите в папку с проектом: `cd todo-tracker`
 4. Запустите приложение: `python main.py`
-   ```
